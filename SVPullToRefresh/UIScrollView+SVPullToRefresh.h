@@ -54,6 +54,7 @@ typedef NS_ENUM(NSUInteger, SVPullToRefreshState) {
 - (void)setCustomView:(UIView *)view forState:(SVPullToRefreshState)state;
 
 - (void)startAnimating;
+- (void)startAnimatingAndScroll:(BOOL)scroll;
 - (void)stopAnimating;
 
 // deprecated; use setSubtitle:forState: instead

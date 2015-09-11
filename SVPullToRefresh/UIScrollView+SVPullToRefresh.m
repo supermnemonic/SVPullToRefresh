@@ -586,12 +586,16 @@ static char UIScrollViewPullToRefreshView;
     [self.scrollView triggerPullToRefresh];
 }
 
-- (void)startAnimating{
+- (void)startAnimating {
+    [self startAnimatingAndScroll:true];
+}
+
+- (void)startAnimatingAndScroll:(BOOL)scroll {
     switch (self.position) {
         case SVPullToRefreshPositionTop:
             
-            if(fequalzero(self.scrollView.contentOffset.y)) {
-                [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x, -self.frame.size.height) animated:YES];
+            if (fequalzero(self.scrollView.contentOffset.y)) {
+                if (scroll) [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x, -self.frame.size.height) animated:YES];
                 self.wasTriggeredByUser = NO;
             }
             else
@@ -602,7 +606,7 @@ static char UIScrollViewPullToRefreshView;
             
             if((fequalzero(self.scrollView.contentOffset.y) && self.scrollView.contentSize.height < self.scrollView.bounds.size.height)
                || fequal(self.scrollView.contentOffset.y, self.scrollView.contentSize.height - self.scrollView.bounds.size.height)) {
-                [self.scrollView setContentOffset:(CGPoint){.y = MAX(self.scrollView.contentSize.height - self.scrollView.bounds.size.height, 0.0f) + self.frame.size.height} animated:YES];
+                if (scroll) [self.scrollView setContentOffset:(CGPoint){.y = MAX(self.scrollView.contentSize.height - self.scrollView.bounds.size.height, 0.0f) + self.frame.size.height} animated:YES];
                 self.wasTriggeredByUser = NO;
             }
             else
